@@ -1,18 +1,28 @@
 import os
 import telebot
 import requests
-import google.generativeai as genai
 
 TOKEN = os.getenv('TOKEN')
-GEMINI_KEY = os.getenv('GEMINI_KEY')
-
-genai.configure(api_key=GEMINI_KEY)
-model = genai.GenerativeModel('gemini-2.0-flash')
+OPENROUTER_KEY = os.getenv('OPENROUTER_KEY')
 
 bot = telebot.TeleBot(TOKEN)
 
 PERSONALIDAD = """Eres un asistente simpático y divertido. 
 Respondes de forma corta y casual, como si fueras un amigo."""
+
+def preguntar_ia(texto):
+    response = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers={"Authorization": f"Bearer {OPENROUTER_KEY}"},
+        json={
+            "model": "meta-llama/llama-3.2-3b-instruct:free",
+            "messages": [
+                {"role": "system", "content": PERSONALIDAD},
+                {"role": "user", "content": texto}
+            ]
+        }
+    )
+    return response.json()['choices'][0]['message']['content']
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -31,8 +41,8 @@ def get_clima(message):
 @bot.message_handler(func=lambda message: True)
 def ai_response(message):
     try:
-        respuesta = model.generate_content(PERSONALIDAD + "\nUsuario: " + message.text)
-        bot.reply_to(message, respuesta.text)
+        respuesta = preguntar_ia(message.text)
+        bot.reply_to(message, respuesta)
     except Exception as e:
         bot.reply_to(message, f"Error: {e}")
 
