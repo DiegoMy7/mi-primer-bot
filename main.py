@@ -3,7 +3,7 @@ from flask import Flask, request
 import telebot
 
 # Configuración — estas variables las defines en Render después
-TOKEN = os.getenv('TOKEN')       # Tu API Token de BotFather
+TOKEN = os.getenv('TOKEN')
 URL_APP = os.getenv('URL_APP')   # La URL que te dará Render (ej: https://mi-bot.onrender.com/)
 
 bot = telebot.TeleBot(TOKEN)
@@ -13,9 +13,12 @@ app = Flask(__name__)
 # ── Webhook endpoint: Telegram envía los mensajes aquí ──────────────────────
 @app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
-    json_string = request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
+    try:
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+    except Exception as e:
+        print(f"ERROR: {e}")
     return "!", 200
 
 
