@@ -18,7 +18,7 @@ app = Flask(__name__)
 def getMessage():
     try:
         json_string = request.get_data().decode('utf-8')
-        print(f"Mensaje recibido: {json_string[:100]}")
+        print(f"Mensaje recibido COMPLETO: {json_string}")
         update = telebot.types.Update.de_json(json_string)
         bot.process_new_updates([update])
         print("Mensaje procesado OK")
