@@ -7,7 +7,7 @@ TOKEN = os.getenv('TOKEN')
 GEMINI_KEY = os.getenv('GEMINI_KEY')
 
 genai.configure(api_key=GEMINI_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -35,5 +35,5 @@ def ai_response(message):
         bot.reply_to(message, respuesta.text)
     except Exception as e:
         bot.reply_to(message, f"Error: {e}")
-        
+
 bot.infinity_polling()
