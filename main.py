@@ -23,7 +23,12 @@ def webhook():
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "¡Hola! Soy tu bot funcional en Python. ¿En qué puedo ayudarte?")
+    print("EJECUTANDO START")
+    try:
+        bot.reply_to(message, "¡Hola! Soy tu bot funcional en Python.")
+        print("RESPUESTA ENVIADA OK")
+    except Exception as e:
+        print(f"ERROR AL RESPONDER: {e}")
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
