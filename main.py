@@ -32,7 +32,9 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    bot.reply_to(message, f"Me dijiste: {message.text}")
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+    print(f"MENSAJE: {message.text}")
+    try:
+        bot.reply_to(message, f"Me dijiste: {message.text}")
+        print("RESPUESTA OK")
+    except Exception as e:
+        print(f"ERROR: {e}")
