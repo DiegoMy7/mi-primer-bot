@@ -34,6 +34,6 @@ def ai_response(message):
         respuesta = model.generate_content(PERSONALIDAD + "\nUsuario: " + message.text)
         bot.reply_to(message, respuesta.text)
     except Exception as e:
-        bot.reply_to(message, "No pude responder, intenta de nuevo.")
-
+        bot.reply_to(message, f"Error: {e}")
+        
 bot.infinity_polling()
