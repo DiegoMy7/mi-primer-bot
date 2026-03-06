@@ -22,7 +22,9 @@ def preguntar_ia(texto):
             ]
         }
     )
-    return response.json()['choices'][0]['message']['content']
+    data = response.json()
+    print(f"RESPUESTA OPENROUTER: {data}")
+    return data['choices'][0]['message']['content']
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
