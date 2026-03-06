@@ -15,7 +15,7 @@ def preguntar_ia(texto):
         "https://openrouter.ai/api/v1/chat/completions",
         headers={"Authorization": f"Bearer {OPENROUTER_KEY}"},
         json={
-            "model": "mistralai/mistral-7b-instruct:free",
+            "model": "deepseek/deepseek-r1:free",
             "messages": [
                 {"role": "system", "content": PERSONALIDAD},
                 {"role": "user", "content": texto}
