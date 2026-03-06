@@ -15,7 +15,7 @@ def preguntar_ia(texto):
         "https://openrouter.ai/api/v1/chat/completions",
         headers={"Authorization": f"Bearer {OPENROUTER_KEY}"},
         json={
-            "model": "deepseek/deepseek-r1:free",
+            "model": "z-ai/glm-4.5-air:free",
             "messages": [
                 {"role": "system", "content": PERSONALIDAD},
                 {"role": "user", "content": texto}
